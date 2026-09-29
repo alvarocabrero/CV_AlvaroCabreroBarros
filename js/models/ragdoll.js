@@ -2,53 +2,9 @@
 (function(CV){
   // joints: 0 head, 1 neck, 2 hip, 3/4 L elbow/hand, 5/6 R elbow/hand, 7/8 L knee/foot, 9/10 R knee/foot
   // bones [a,b,length/H,stiffness]
-  var BONES=[[0,1,.13,1],[1,2,.28,1],[1,3,.15,1],[3,4,.15,1],[1,5,.15,1],[5,6,.15,1],[2,7,.19,1],[7,8,.19,1],[2,9,.19,1],[9,10,.19,1],[0,2,.41,.12],[7,9,.15,.03]];
-  // relaxed idle pose (slightly slouched, arms hanging, weight on one leg), offsets from the box centre in H units (feet on the floor)
-  var IDLE=[[.015,-.31],[.004,-.18],[-.01,.1],[-.085,-.055],[-.1,.093],[.085,-.055],[.115,.09],[-.0853,.2745],[-.085,.4645],[.0634,.2753],[.08,.4645]];
-
-  // rotation limits so the figure keeps its shape when pushed. Each entry is the angle of a child
-  // bone (c0->c1) against its parent bone (p0->p1, both meeting at p1==c0): [p0,p1,c0,c1,min,max,mode]
-  // mode 'r': limits are relative to the rest (idle) angle, 'a': absolute (elbows and knees bend one way)
-  var LIMITS=[
-    [2,1,1,0,-.45,.45,'r'],   // neck
-    [2,1,1,3,-1.5,1.5,'r'],   // left shoulder
-    [2,1,1,5,-1.5,1.5,'r'],   // right shoulder
-    [1,3,3,4,-1.9,.05,'a'],   // left elbow
-    [1,5,5,6,-.05,1.9,'a'],  // right elbow
-    [1,2,2,7,-.65,.65,'r'],    // left hip
-    [1,2,2,9,-.65,.65,'r'],    // right hip
-    [2,7,7,8,-1.1,.05,'a'],   // left knee
-    [2,9,9,10,-.05,1.1,'a']   // right knee
-  ];
-  function wrap(d){while(d>Math.PI)d-=2*Math.PI;while(d<-Math.PI)d+=2*Math.PI;return d}
-  function jointAngle(P,l){
-    var A=P[l[0]],J=P[l[1]],C0=P[l[2]],C=P[l[3]];
-    return wrap(Math.atan2(C.y-C0.y,C.x-C0.x)-Math.atan2(J.y-A.y,J.x-A.x));
-  }
-  var REST=LIMITS.map(function(l){var P=IDLE.map(function(v){return{x:v[0],y:v[1]}});return jointAngle(P,l)});
-  function rotate(p,o,th){var x=p.x-o.x,y=p.y-o.y,c=Math.cos(th),s=Math.sin(th);p.x=o.x+x*c-y*s;p.y=o.y+x*s+y*c}
-  // keep the left leg on the left of the torso and the right leg on the right
-  // (measured across the spine, so it works whatever the body orientation); corrections are capped so a
-  // tangled pair is pulled apart smoothly instead of snapping past each other
-  function uncrossLegs(P,H){
-    var hip=P[2],ux=P[1].x-hip.x,uy=P[1].y-hip.y,len=Math.hypot(ux,uy);
-    if(len<H*.05)return;
-    var nx=-uy/len,ny=ux/len;
-    [[7,9,.04],[8,10,.05]].forEach(function(pr){
-      var L=P[pr[0]],Rt=P[pr[1]],sL=(L.x-hip.x)*nx+(L.y-hip.y)*ny,sR=(Rt.x-hip.x)*nx+(Rt.y-hip.y)*ny,diff=Math.max(sR-sL-pr[2]*H,-H*.008);
-      if(diff<0){L.x+=nx*diff/2;L.y+=ny*diff/2;Rt.x-=nx*diff/2;Rt.y-=ny*diff/2}
-    });
-  }
-  // rotate the child bone (mostly) and the parent bone (a little) back inside the allowed range
-  function limitJoints(P){
-    for(var k=0;k<LIMITS.length;k++){
-      var l=LIMITS[k],rel=wrap(jointAngle(P,l)-(l[6]==='r'?REST[k]:0)),cl=Math.max(l[4],Math.min(l[5],rel));
-      if(cl===rel)continue;
-      var d=cl-rel;
-      rotate(P[l[3]],P[l[2]],d*.7);
-      rotate(P[l[0]],P[l[1]],-d*.3);
-    }
-  }
+  var BONES=[[0,1,.13,1],[1,2,.28,1],[1,3,.15,1],[3,4,.15,1],[1,5,.15,1],[5,6,.15,1],[2,7,.19,1],[7,8,.19,1],[2,9,.19,1],[9,10,.19,1],[0,2,.41,.12],[7,9,.09,.03]];
+  // idle pose, offsets from the box centre in H units (feet on the floor)
+  var IDLE=[[0,-.32],[0,-.19],[0,.09],[-.125,-.105],[-.14,.045],[.125,-.105],[.14,.045],[-.045,.275],[-.055,.4645],[.045,.275],[.055,.4645]];
 
   function smooth(u){u=Math.max(0,Math.min(1,u));return u*u*(3-2*u)}
 
@@ -67,24 +23,14 @@
     else if(ow&&oh)this.points.forEach(function(p){p.x*=w/ow;p.y*=h/oh;p.px*=w/ow;p.py*=h/oh});
   };
 
-  // relaxed waiting motion (breathing, weight shift, glancing, an occasional foot tap),
-  // then a periodic wave: arm rises with a little overshoot, forearm swings around the
-  // elbow, head and torso follow
+  // standing pose plus the periodic wave: arm rises with a little overshoot,
+  // forearm swings around the elbow, head and torso follow
   R.pose=function(){
-    var t=this.t,W=this.W,H=this.H,START=4,ph=(t-START)%7,D=2.8,on=t>=START&&ph<D,e=0,we=0,a=0,f=t*11;
-    if(on){
-      // ease in from rest (no sudden start), small overshoot, hold, ease out
-      if(ph<.72){var x1=Math.min(1,ph/.42),x2=Math.max(0,Math.min(1,(ph-.42)/.3));e=smooth(x1)+.1*Math.pow(Math.sin(Math.PI*x2),2)}else e=smooth((D-ph)/.5);
-      we=smooth((ph-.35)/.3)*smooth((D-.1-ph)/.4);a=Math.sin(f)*.65*we}
-    var br=Math.sin(t*1.8)*.004,sw=Math.sin(t*.7)*.008,gl=Math.sin(t*.45)*.012,ft=t%4.5,tap=ft>2.6&&ft<3.6?Math.max(0,Math.sin((ft-2.6)*Math.PI*3))*.022:0;
+    var t=this.t,W=this.W,H=this.H,ph=(t-1.5)%5,D=2.8,on=t>=1.5&&ph<D,e=0,we=0,a=0,f=t*11;
+    if(on){var u=Math.min(1,ph/.5)-1;e=ph<.5?1+2.2*u*u*u+1.2*u*u:smooth((D-ph)/.5);we=smooth((ph-.35)/.3)*smooth((D-.1-ph)/.4);a=Math.sin(f)*.65*we}
+    var s=Math.sin(t*2)*.006;
     this.points.forEach(function(p,i){
-      var x=IDLE[i][0],y=IDLE[i][1];
-      if(i===0){x+=sw*1.3+gl;y+=br}
-      else if(i===1){x+=sw;y+=br}
-      else if(i===2)x-=sw*.3;
-      else if(i<7){x+=sw+((i===4||i===6)?Math.sin(t*1.1+i)*.005:0);y+=br}
-      else if(i===9)y-=tap*.5;
-      else if(i===10)y-=tap;
+      var x=IDLE[i][0],y=IDLE[i][1]+(i<3?0:s);
       if(i===0){x+=-e*.075+Math.sin(f)*.012*we;y+=.012*e-Math.abs(Math.sin(f))*.006*we}
       else if(i===1)x-=e*.03;
       else if(i===3||i===4){x-=e*.015*(i-2);y+=Math.sin(f+3)*.008*we}
@@ -116,15 +62,12 @@
     var P=this.points,H=this.H,gr=H*.004*(this.rising?Math.max(0,1-this.riseT/1.5):1),i,j;
     for(i=0;i<P.length;i++){var p=P[i],vx=(p.x-p.px)*.995,vy=(p.y-p.py)*.995;p.px=p.x;p.py=p.y;p.x+=vx;p.y+=vy+gr}
     for(j=0;j<8;j++){
-      // the grabbed joint is pulled towards the pointer first, so bones and joint limits keep the last word
-      if(this.drag>=0){var q=P[this.drag];q.x+=(this.gx-q.x)*.75;q.y+=(this.gy-q.y)*.75}
       for(i=0;i<BONES.length;i++){
         var b=BONES[i],A=P[b[0]],C=P[b[1]],dx=C.x-A.x,dy=C.y-A.y,d=Math.hypot(dx,dy)||.001,f=(d-b[2]*H)/d*.5*b[3];
         A.x+=dx*f;A.y+=dy*f;C.x-=dx*f;C.y-=dy*f;
       }
-      limitJoints(P);limitJoints(P);
-      uncrossLegs(P,H);
       for(i=0;i<P.length;i++)this.fit(P[i],i?H*.03:H*.085);
+      if(this.drag>=0){var q=P[this.drag];q.x=this.gx;q.y=this.gy;this.fit(q,this.drag?H*.03:H*.085)}
     }
     if(this.drag>=0){this.still=0;this.rising=false}
     else if(this.rising)this.rise();
