@@ -30,12 +30,12 @@
   // keep the left leg on the left of the torso and the right leg on the right
   // (measured across the spine, so it works whatever the body orientation); corrections are capped so a
   // tangled pair is pulled apart smoothly instead of snapping past each other
-  function uncrossLegs(P,H){
+  function uncrossLegs(P,S){
     var hip=P[2],ux=P[1].x-hip.x,uy=P[1].y-hip.y,len=Math.hypot(ux,uy);
-    if(len<H*.05)return;
+    if(len<S*.05)return;
     var nx=-uy/len,ny=ux/len;
     [[7,9,.04],[8,10,.05]].forEach(function(pr){
-      var L=P[pr[0]],Rt=P[pr[1]],sL=(L.x-hip.x)*nx+(L.y-hip.y)*ny,sR=(Rt.x-hip.x)*nx+(Rt.y-hip.y)*ny,diff=Math.max(sR-sL-pr[2]*H,-H*.008);
+      var L=P[pr[0]],Rt=P[pr[1]],sL=(L.x-hip.x)*nx+(L.y-hip.y)*ny,sR=(Rt.x-hip.x)*nx+(Rt.y-hip.y)*ny,diff=Math.max(sR-sL-pr[2]*S,-S*.008);
       if(diff<0){L.x+=nx*diff/2;L.y+=ny*diff/2;Rt.x-=nx*diff/2;Rt.y-=ny*diff/2}
     });
   }
@@ -54,6 +54,8 @@
 
   function Ragdoll(){
     this.W=0;this.H=0;
+    this.S=0;        // figure scale (the height of the pill it starts in); bone lengths and sizes derive from it
+    this.box=false;  // false: inside the pill, true: free in the browser window
     this.points=IDLE.map(function(){return{x:0,y:0,px:0,py:0}});
     this.idle=true;this.drag=-1;this.gx=0;this.gy=0;
     this.t=0;this.still=0;this.rising=false;this.riseT=0;
@@ -62,7 +64,9 @@
   Ragdoll.BONES=BONES;
 
   R.resize=function(w,h){
-    var ow=this.W,oh=this.H;this.W=w;this.H=h;
+    var ow=this.W,oh=this.H,self=this;this.W=w;this.H=h;
+    if(this.box){this.points.forEach(function(p){self.fit(p,self.S*.03)});return}
+    this.S=h;
     if(this.idle)this.pose();
     else if(ow&&oh)this.points.forEach(function(p){p.x*=w/ow;p.y*=h/oh;p.px*=w/ow;p.py*=h/oh});
   };
@@ -71,7 +75,7 @@
   // then a periodic wave: arm rises with a little overshoot, forearm swings around the
   // elbow, head and torso follow
   R.pose=function(){
-    var t=this.t,W=this.W,H=this.H,START=4,ph=(t-START)%7,D=2.8,on=t>=START&&ph<D,e=0,we=0,a=0,f=t*11;
+    var t=this.t,W=this.W,H=this.H,S=this.S,START=4,ph=(t-START)%7,D=2.8,on=t>=START&&ph<D,e=0,we=0,a=0,f=t*11;
     if(on){
       // ease in from rest (no sudden start), small overshoot, hold, ease out
       if(ph<.72){var x1=Math.min(1,ph/.42),x2=Math.max(0,Math.min(1,(ph-.42)/.3));e=smooth(x1)+.1*Math.pow(Math.sin(Math.PI*x2),2)}else e=smooth((D-ph)/.5);
@@ -91,46 +95,60 @@
       else if(i===5||i===6){
         var ex=.115+Math.sin(f)*.012*we,ey=-.286,hx=ex+.15*Math.sin(a),hy=ey-.15*Math.cos(a),tx=i===5?ex:hx,ty=i===5?ey:hy;
         x+=(tx-x)*e;y+=(ty-y)*e}
-      p.x=W*.5+x*H;p.y=H*.5+y*H;p.px=p.x;p.py=p.y});
+      p.x=W*.5+x*S;p.y=H*.5+y*S;p.px=p.x;p.py=p.y});
   };
 
-  // keep a point inside the pill (stadium) shape
+  // keep a point inside its world: the pill (stadium) shape, or the browser window where it bounces
   R.fit=function(p,m){
-    var W=this.W,H=this.H,r=H/2,cx=Math.max(r,Math.min(W-r,p.x)),dx=p.x-cx,dy=p.y-r,d=Math.hypot(dx,dy),lim=r-m;
+    var W=this.W,H=this.H;
+    if(this.box){
+      var vx=p.x-p.px,vy=p.y-p.py;
+      if(p.x<m){p.x=m;p.px=vx<0?m+vx*.3:m-vx}
+      else if(p.x>W-m){p.x=W-m;p.px=vx>0?p.x+vx*.3:p.x-vx}
+      if(p.y<m){p.y=m;p.py=vy<0?m+vy*.25:m-vy}
+      else if(p.y>H-m){p.y=H-m;p.py=vy>0?p.y+vy*.15:p.y-vy;p.px=p.x-(p.x-p.px)*.85}
+      return;
+    }
+    var r=H/2,cx=Math.max(r,Math.min(W-r,p.x)),dx=p.x-cx,dy=p.y-r,d=Math.hypot(dx,dy),lim=r-m;
     if(d>lim&&d>0){p.x=cx+dx*lim/d;p.y=r+dy*lim/d;if(dy>0){p.px=p.x-(p.x-p.px)*.75;p.py=p.y-(p.y-p.py)*.6}}
   };
 
   // once at rest, pull the joints back to the standing pose (feet first, head last), then restart the idle loop
   R.rise=function(){
-    var W=this.W,H=this.H,ok=true;this.riseT+=.016;
+    var W=this.W,H=this.H,S=this.S,ok=true;this.riseT+=.016;
     for(var i=0;i<this.points.length;i++){
-      var p=this.points[i],tx=W*.5+IDLE[i][0]*H,ty=H*.5+IDLE[i][1]*H,dl=i>2?(i>6?0:.5):(i?.4:.9),k=Math.max(0,Math.min(.14,(this.riseT-dl)*.14));
+      var p=this.points[i],tx=W*.5+IDLE[i][0]*S,ty=H*.5+IDLE[i][1]*S,dl=i>2?(i>6?0:.5):(i?.4:.9),k=Math.max(0,Math.min(.14,(this.riseT-dl)*.14));
       p.x+=(tx-p.x)*k;p.y+=(ty-p.y)*k;p.px=p.x-(p.x-p.px)*.6;p.py=p.y-(p.y-p.py)*.6;
-      if(Math.hypot(tx-p.x,ty-p.y)>H*.015)ok=false;
+      if(Math.hypot(tx-p.x,ty-p.y)>S*.015)ok=false;
     }
     if(ok&&this.riseT>1.5||this.riseT>5){this.idle=true;this.rising=false;this.still=0;this.t=0;this.pose()}
   };
 
   R.step=function(){
     if(this.idle){this.t+=.016;this.pose();return}
-    var P=this.points,H=this.H,gr=H*.004*(this.rising?Math.max(0,1-this.riseT/1.5):1),i,j;
-    for(i=0;i<P.length;i++){var p=P[i],vx=(p.x-p.px)*.995,vy=(p.y-p.py)*.995;p.px=p.x;p.py=p.y;p.x+=vx;p.y+=vy+gr}
+    var P=this.points,S=this.S,gr=S*.004*(this.rising?Math.max(0,1-this.riseT/1.5):1),i,j;
+    var vmax=S*.12;
+    for(i=0;i<P.length;i++){
+      var p=P[i],vx=(p.x-p.px)*.995,vy=(p.y-p.py)*.995,sp=Math.hypot(vx,vy);
+      if(this.box&&sp>vmax){vx*=vmax/sp;vy*=vmax/sp} // free in the window: no runaway speeds
+      p.px=p.x;p.py=p.y;p.x+=vx;p.y+=vy+gr;
+    }
     for(j=0;j<8;j++){
       // the grabbed joint is pulled towards the pointer first, so bones and joint limits keep the last word
       if(this.drag>=0){var q=P[this.drag];q.x+=(this.gx-q.x)*.75;q.y+=(this.gy-q.y)*.75}
       for(i=0;i<BONES.length;i++){
-        var b=BONES[i],A=P[b[0]],C=P[b[1]],dx=C.x-A.x,dy=C.y-A.y,d=Math.hypot(dx,dy)||.001,f=(d-b[2]*H)/d*.5*b[3];
+        var b=BONES[i],A=P[b[0]],C=P[b[1]],dx=C.x-A.x,dy=C.y-A.y,d=Math.hypot(dx,dy)||.001,f=(d-b[2]*S)/d*.5*b[3];
         A.x+=dx*f;A.y+=dy*f;C.x-=dx*f;C.y-=dy*f;
       }
       limitJoints(P);limitJoints(P);
-      uncrossLegs(P,H);
-      for(i=0;i<P.length;i++)this.fit(P[i],i?H*.03:H*.085);
+      uncrossLegs(P,S);
+      for(i=0;i<P.length;i++)this.fit(P[i],i?S*.03:S*.085);
     }
     if(this.drag>=0){this.still=0;this.rising=false}
     else if(this.rising)this.rise();
-    else{
+    else if(!this.box){
       var m=0;P.forEach(function(p){m=Math.max(m,Math.hypot(p.x-p.px,p.y-p.py))});
-      this.still=m<H*.004?this.still+1:0;
+      this.still=m<S*.004?this.still+1:0;
       if(this.still>90){this.rising=true;this.riseT=0}
     }
   };
@@ -141,7 +159,20 @@
     this.rising=false;this.still=0;
   };
 
-  R.nearest=function(x,y){var k=-1,m=this.H*.4;this.points.forEach(function(p,i){var d=Math.hypot(p.x-x,p.y-y);if(d<m){m=d;k=i}});return k};
+  // leave the pill: move to window coordinates (the pill sat at ox,oy), grow by `scale` and fall
+  // freely inside a vw x vh window, bouncing off its edges. There is no getting back up from here.
+  R.breakOut=function(ox,oy,vw,vh,scale){
+    var P=this.points,cx=0,cy=0;
+    P.forEach(function(p){cx+=p.x;cy+=p.y});cx/=P.length;cy/=P.length;
+    this.wake();
+    P.forEach(function(p){
+      p.x=ox+cx+(p.x-cx)*scale;p.y=oy+cy+(p.y-cy)*scale;
+      p.px=ox+cx+(p.px-cx)*scale;p.py=oy+cy+(p.py-cy)*scale;
+    });
+    this.S*=scale;this.W=vw;this.H=vh;this.box=true;
+  };
+
+  R.nearest=function(x,y){var k=-1,m=this.S*.4;this.points.forEach(function(p,i){var d=Math.hypot(p.x-x,p.y-y);if(d<m){m=d;k=i}});return k};
 
   // grab the joint nearest to (x,y); false when nothing is close enough
   R.grab=function(x,y){
@@ -154,12 +185,12 @@
 
   // pointer moving by (dx,dy) at (x,y) pushes nearby joints in that direction
   R.push=function(x,y,dx,dy){
-    var H=this.H,mx=Math.max(-H*.5,Math.min(H*.5,dx)),my=Math.max(-H*.5,Math.min(H*.5,dy)),r=H*.5;
-    if(Math.hypot(mx,my)<=H*.02)return;
+    var S=this.S,cap=S*(this.box?.25:.5),k=this.box?.1:.22,mx=Math.max(-cap,Math.min(cap,dx)),my=Math.max(-cap,Math.min(cap,dy)),r=S*.5;
+    if(Math.hypot(mx,my)<=S*.02)return;
     var hit=this.points.filter(function(p){return Math.hypot(p.x-x,p.y-y)<r});
     if(!hit.length)return;
     this.wake();
-    hit.forEach(function(p){var w=1-Math.hypot(p.x-x,p.y-y)/r;p.px-=mx*w*.22;p.py-=my*w*.22});
+    hit.forEach(function(p){var w=1-Math.hypot(p.x-x,p.y-y)/r;p.px-=mx*w*k;p.py-=my*w*k});
   };
 
   CV.Ragdoll=Ragdoll;
