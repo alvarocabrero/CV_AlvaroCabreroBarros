@@ -46,6 +46,17 @@
     if(d>lim&&d>0){p.x=cx+dx*lim/d;p.y=r+dy*lim/d;if(dy>0){p.px=p.x-(p.x-p.px)*.75;p.py=p.y-(p.y-p.py)*.6}}
   };
 
+  // limbs are drawn identically, so before getting up give each leg (and arm) the side it is
+  // already closest to; otherwise a fallen figure with swapped legs crosses them on the way up
+  R.untangle=function(){
+    var P=this.points,W=this.W,H=this.H;
+    function cost(a,b){var c=0;for(var k=0;k<2;k++)c+=Math.hypot(P[a+k].x-W*.5-IDLE[b+k][0]*H,P[a+k].y-H*.5-IDLE[b+k][1]*H);return c}
+    [[3,5],[7,9]].forEach(function(l){
+      var a=l[0],b=l[1];
+      if(cost(a,b)+cost(b,a)<cost(a,a)+cost(b,b))for(var k=0;k<2;k++){var t=P[a+k];P[a+k]=P[b+k];P[b+k]=t}
+    });
+  };
+
   // once at rest, pull the joints back to the standing pose (feet first, head last), then restart the idle loop
   R.rise=function(){
     var W=this.W,H=this.H,ok=true;this.riseT+=.016;
@@ -74,7 +85,7 @@
     else{
       var m=0;P.forEach(function(p){m=Math.max(m,Math.hypot(p.x-p.px,p.y-p.py))});
       this.still=m<H*.004?this.still+1:0;
-      if(this.still>90){this.rising=true;this.riseT=0}
+      if(this.still>90){this.untangle();this.rising=true;this.riseT=0}
     }
   };
 
