@@ -33,3 +33,9 @@ python -m http.server 8080
 ```
 
 Then open <http://localhost:8080>.
+
+## License
+
+The site's code (HTML, CSS and JavaScript) is released under the [MIT License](LICENSE).
+The CV, recommendation letters, icons and game media are not covered by it; see
+[LICENSE](LICENSE) for details.
