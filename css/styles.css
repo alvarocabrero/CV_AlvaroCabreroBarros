@@ -12,13 +12,13 @@ a{color:var(--ink);text-decoration-color:var(--acc);text-underline-offset:4px}
 .top a{color:var(--ink);text-decoration:none}
 .top a:hover{color:var(--mute)}
 .hi{font:700 clamp(1.4rem,3vw,2rem) var(--d);margin:3rem 0 0}
-.stack{margin:.4rem 0 3rem;font:800 clamp(3rem,13.5vw,10.5rem)/.9 var(--d);letter-spacing:-.05em;text-transform:uppercase}
+.stack{margin:.4rem 0 3rem;font:800 clamp(1.6rem,min(13.5vw,(100vw - 2.8rem)/6.4),10.5rem)/.9 var(--d);letter-spacing:-.05em;text-transform:uppercase}
 .stack div{display:flex;align-items:center;gap:.15em}
 .pill{height:.7em;width:1.5em;border-radius:99px;background:var(--acc);flex:none;overflow:hidden}
 .pill canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 section{padding:3rem 0;border-top:1px solid var(--line)}
 .label{font:700 .95rem var(--d);color:var(--mute);margin:0 0 2rem}
-h2{font:800 clamp(2.2rem,6vw,4rem)/1 var(--d);letter-spacing:-.035em;margin:0 0 1.5rem;text-transform:uppercase}
+h2{font:800 clamp(min(2.2rem,(100vw - 2.8rem)/10),6vw,4rem)/1 var(--d);letter-spacing:-.035em;margin:0 0 1.5rem;text-transform:uppercase}
 .lead{font:400 clamp(1.3rem,2.6vw,1.9rem)/1.4 var(--b);max-width:32ch;margin:0}
 .row{display:grid;grid-template-columns:minmax(220px,34%) 1fr;gap:2rem;padding:2rem 0;border-top:1px solid var(--line)}
 .row:first-of-type{border-top:0;padding-top:0}
