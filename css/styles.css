@@ -1,3 +1,30 @@
+/*
+ * Styles for the whole site. One file, no preprocessor, no build step.
+ *
+ * Sections:
+ *   1. Design tokens and base elements
+ *   2. Top bar and hero (including the ragdoll pill)
+ *   3. Sections, rows and typography
+ *   4. Skills chips, contact block, footer
+ *   5. Media carousels
+ *   6. Popup dialog (YouTube, Steam, enlarged media)
+ *   7. Recommendation quotes
+ *   8. Narrow screens (≤ 820px)
+ *
+ * Fluid type uses clamp(min, preferred, max): sizes follow the viewport width
+ * (vw) between a minimum and a maximum, so most of the layout needs no
+ * breakpoints. Below 820px the two-column rows stack (section 8).
+ */
+
+/* ===== 1. Design tokens and base elements =====
+ * --bg     page background        --ink   main text
+ * --mute   secondary text         --line  hairlines and borders
+ * --acc    accent: pill, buttons, placeholders, focus ring
+ * --onacc  text on the accent     --card  light surface (currently unused)
+ * --d      display font (headings, labels)
+ * --b      body font (paragraphs)
+ * The root also pads for notches and home indicators (safe-area insets).
+ */
 :root{--bg:#e9e8e6;--ink:#1c1c1c;--mute:#5f5d5a;--line:#cfcdca;--acc:#6b6863;--onacc:#fff;--card:#f4f3f1;
 --d:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;--b:"Literata",Georgia,serif;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -6,52 +33,88 @@ html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 1.05rem/1.7 var(--b)}
 a{color:var(--ink);text-decoration-color:var(--acc);text-underline-offset:4px}
 :focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+/* centred column: 1120px max, 1.4rem side gutter */
 .page{max-width:1120px;margin:0 auto;padding:0 1.4rem}
+
+/* ===== 2. Top bar and hero ===== */
+/* top bar: name on the left, section links on the right */
 .top{display:flex;justify-content:space-between;align-items:center;padding:1.3rem 0;font:700 1rem var(--d)}
 .top nav{display:flex;gap:1.4rem;align-items:center}
 .top a{color:var(--ink);text-decoration:none}
 .top a:hover{color:var(--mute)}
+/* hero: "Hey! I'm Álvaro." */
 .hi{font:700 clamp(1.4rem,3vw,2rem) var(--d);margin:3rem 0 0}
+/* hero title: three huge stacked words. The size follows the viewport (13.5vw),
+   but never exceeds what fits: the widest line, "ANIMATION" plus the pill,
+   is about 6.3em wide, so it is capped at (100vw − gutters) / 6.4. */
 .stack{margin:.4rem 0 3rem;font:800 clamp(1.6rem,min(13.5vw,(100vw - 2.8rem)/6.4),10.5rem)/.9 var(--d);letter-spacing:-.05em;text-transform:uppercase}
 .stack div{display:flex;align-items:center;gap:.15em}
+/* the rounded box the ragdoll lives in; sized in em so it scales with the title */
 .pill{height:.7em;width:1.5em;border-radius:99px;background:var(--acc);flex:none;overflow:hidden}
+/* touch-action:none stops the page scrolling while dragging the figure on touch screens */
 .pill canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+
+/* ===== 3. Sections, rows and typography ===== */
 section{padding:3rem 0;border-top:1px solid var(--line)}
 .label{font:700 .95rem var(--d);color:var(--mute);margin:0 0 2rem}
+/* section titles. The minimum is capped so the longest one,
+   "RECOMMENDATIONS" (about 9.6em), fits narrow phones */
 h2{font:800 clamp(min(2.2rem,(100vw - 2.8rem)/10),6vw,4rem)/1 var(--d);letter-spacing:-.035em;margin:0 0 1.5rem;text-transform:uppercase}
 .lead{font:400 clamp(1.3rem,2.6vw,1.9rem)/1.4 var(--b);max-width:32ch;margin:0}
+/* the two-column entry used by Work, Education, Projects and Recommendations:
+   name and meta on the left, details on the right */
 .row{display:grid;grid-template-columns:minmax(220px,34%) 1fr;gap:2rem;padding:2rem 0;border-top:1px solid var(--line)}
 .row:first-of-type{border-top:0;padding-top:0}
+/* entry name (company, project, person) and its small meta lines */
 .name{font:800 clamp(1.8rem,4.2vw,3rem)/1 var(--d);letter-spacing:-.03em;margin:0}
 .meta{font:700 .92rem var(--d);color:var(--mute);margin:.5rem 0 0}
 .row h3{font:700 1.15rem var(--d);margin:0 0 .4rem}
 .row ul{margin:.3rem 0 0;padding-left:1.1rem;max-width:66ch}
 .row li{margin:.3rem 0}
 .row p{margin:.2rem 0 0;max-width:66ch}
+
+/* ===== 4. Skills chips, contact block, footer ===== */
+/* pill-shaped skill tags; .hot (a whole list) or .hl (one chip) marks core skills */
 .chips{display:flex;flex-wrap:wrap;gap:.4rem;padding:0;margin:.3rem 0 1.4rem;list-style:none}
 .chips li{font:700 .82rem var(--d);padding:.2rem .75rem;border:1px solid var(--line);border-radius:99px;color:var(--mute);margin:0}
 .chips.hot li{color:var(--ink);border-color:var(--acc)}
 .chips li.hl{color:var(--ink);border-color:var(--acc)}
+/* Skills | Education side by side */
 .two{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+/* "Let's talk" contact block and its buttons */
 .talk{padding:4rem 0 2rem}
 .talk .big{font:800 clamp(3rem,12vw,9rem)/.9 var(--d);letter-spacing:-.05em;text-transform:uppercase;margin:0 0 1.6rem}
 .btn{display:inline-block;font:700 1.05rem var(--d);padding:.85rem 1.5rem;border-radius:99px;background:var(--acc);color:var(--onacc);text-decoration:none}
 .btn.alt{background:none;color:var(--ink);border:1.5px solid var(--line);margin-left:.5rem}
 footer{border-top:1px solid var(--line);padding:1.4rem 0 3rem;font:700 .9rem var(--d);color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+
+/* ===== 5. Media carousels =====
+ * .car is a placeholder filled by js/views/carouselView.js:
+ * .frame > .track > .slide (img|video), plus .cap (caption) and .dots.
+ * The track is a native horizontal scroller with mandatory snap points,
+ * one slide per width, so swiping works without JavaScript. */
 .gallery{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:0 0 1.8rem}
 @media(max-width:820px){.gallery{gap:.6rem;margin:.6rem 0 1.6rem}}
 .car{position:relative}
+/* hidden scrollbar; overscroll-behavior stops a swipe from navigating back in the browser */
 .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;aspect-ratio:16/10;scroll-behavior:smooth;overscroll-behavior-x:contain}
 .track::-webkit-scrollbar{display:none}
 .slide{flex:0 0 100%;scroll-snap-align:start;position:relative;background:var(--acc);margin:0}
+/* media stay hidden until loaded (.has), showing the accent colour as a placeholder */
 .slide img,.slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
 .slide.has img,.slide.has video{display:block}
 .frame{position:relative;border-radius:10px;overflow:hidden}
+/* caption on a soft gradient so white text stays readable on any image */
 .cap{position:absolute;left:0;right:0;bottom:0;padding:1.6rem .9rem .8rem;pointer-events:none;color:#fff;font:800 clamp(1.1rem,3vw,1.6rem)/1.05 var(--d);letter-spacing:-.03em;text-shadow:0 1px 6px rgba(0,0,0,.35);background:linear-gradient(transparent,rgba(0,0,0,.4))}
+/* slide indicators; the current one is marked with aria-current */
 .dots{display:flex;gap:.5rem;justify-content:center;margin-top:.7rem}
 .dots button{width:.6rem;height:.6rem;padding:0;border:0;border-radius:50%;background:var(--line);cursor:pointer}
 .dots button[aria-current="true"]{background:var(--ink)}
 @media(prefers-reduced-motion:reduce){.track{scroll-behavior:auto}}
+
+/* ===== 6. Popup dialog =====
+ * One <dialog id="vid"> for YouTube embeds, Steam widgets (.steam) and enlarged
+ * carousel media (with .nav arrows). See js/views/dialogView.js. */
 dialog.vid{border:0;padding:0;background:transparent;max-width:none;width:min(92vw,960px);overflow:visible;margin:auto}
 dialog.vid::backdrop{background:rgba(10,10,10,.82)}
 .vid .bar{display:flex;justify-content:space-between;align-items:center;padding:0 0 .6rem;font:700 .95rem var(--d)}
@@ -59,18 +122,32 @@ dialog.vid::backdrop{background:rgba(10,10,10,.82)}
 .vid .bar button{all:unset;cursor:pointer;color:#fff;border-bottom:1px solid #fff}
 .vid .frame{position:relative;aspect-ratio:16/9;background:#000;border-radius:10px;overflow:hidden}
 .vid iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+/* Steam's store widget is a fixed-height banner, not a 16:9 video */
 dialog.vid.steam{width:min(92vw,660px)}
 dialog.vid.steam .frame{aspect-ratio:auto;height:190px;background:transparent}
+/* carousels open the enlarged view on click */
 .car .frame{cursor:zoom-in}
+/* previous/next arrows over enlarged media */
 .vid .nav{position:absolute;top:50%;transform:translateY(-50%);width:2.6rem;height:2.6rem;border:0;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;font:400 2rem/1 var(--d);cursor:pointer;display:grid;place-items:center;padding:0 0 .2rem;z-index:2}
 .vid .nav:hover,.vid .nav:focus-visible{background:rgba(0,0,0,.8)}
+/* arrow positions; then Steam game links in the text (they open the store widget) */
 .vid .prev{left:.6rem}.vid .next{right:.6rem}a.steam{color:inherit;text-decoration:underline;text-decoration-color:var(--acc);text-underline-offset:.2em}
+/* enlarged media are letterboxed, never cropped */
 dialog.vid .frame video,dialog.vid .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+
+/* ===== 7. Recommendation quotes =====
+ * A large opening quote mark above the text, and a closing one after the last paragraph. */
 .quote{margin:0;max-width:66ch;quotes:"\201C" "\201D"}
 .quote::before{content:"\201C";display:block;font:800 4.5rem/.7 var(--d);height:2.2rem;color:var(--acc)}
 .quote p{margin:0 0 .9rem;font:italic 400 clamp(1.1rem,1.9vw,1.3rem)/1.6 var(--b)}
 .quote p:last-child{margin-bottom:0}
 .quote p:last-child::after{content:"\201D"}
+/* "Download the full letter (PDF)" line under each quote */
 .row .note{font:700 .85rem var(--d);color:var(--mute);margin:.8rem 0 0}
 .row .note a{color:var(--ink)}
+
+/* ===== 8. Narrow screens (≤ 820px) =====
+ * Rows and Skills/Education stack into one column; the top bar keeps only the
+ * name and the Contact link (links with class .h are hidden); the secondary buttons wrap below the main one;
+ * carousels switch to a portrait 4:5 frame; captions and dots adjust. */
 @media(max-width:820px){.row,.two{grid-template-columns:1fr;gap:.8rem}.top nav a.h{display:none}.btn.alt{margin:.6rem 0 0}.track{aspect-ratio:4/5}.cap{font-size:1.15rem;padding:1.4rem .7rem .7rem}.dots button{width:.75rem;height:.75rem}}

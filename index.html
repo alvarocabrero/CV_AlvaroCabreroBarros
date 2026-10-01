@@ -1,9 +1,15 @@
 <!DOCTYPE html>
+<!--
+  Álvaro Cabrero Barros · personal site and CV (https://alvaro.cabrero.me).
+  Plain HTML, CSS and JavaScript, no build step. This file holds the content;
+  styles live in css/styles.css and behaviour in js/. See README.md and docs/.
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Álvaro Cabrero Barros · Animation Programmer</title>
+<!-- fonts: Bricolage Grotesque (display) and Literata (body); system fonts are the fallback -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
 <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="icons/icon-32.png" type="image/png" sizes="32x32">
@@ -12,11 +18,13 @@
 </head>
 <body>
 <div class="page">
+<!-- top bar. Links with class "h" are hidden on narrow screens. -->
 <div class="top">
   <a href="#">Álvaro Cabrero Barros</a>
   <nav aria-label="Sections"><a class="h" href="#about">About</a><a class="h" href="#work">Work</a><a class="h" href="#projects">Projects</a><a class="h" href="#recommendations">Recommendations</a><a class="h" href="CV_AlvaroCabrero.pdf" download>CV</a><a href="#contact">Contact</a></nav>
 </div>
 
+<!-- hero. The canvas inside .pill is the interactive ragdoll (js/models/ragdoll.js). -->
 <header>
   <p class="hi">Hey! I'm Álvaro.</p>
   <div class="stack" aria-label="Animation systems and gameplay">
@@ -32,6 +40,13 @@
   <p style="max-width:62ch;margin:1.5rem 0 0">Experience in AAA and indie development, highly proficient in Unreal Engine (C++). I act as a bridge between technical and artistic teams, design complex animation systems and raise the visual quality of gameplay. I learn fast and enjoy multidisciplinary teams.</p>
 </section>
 
+<!--
+  Work. Each entry is a .row: name and meta on the left, details on the right.
+  A .car placeholder becomes a media carousel: data-title is its caption and
+  data-imgs a comma-separated list of images/videos (.jpg, .mp4, .webm).
+  YouTube links open in the popup; a.steam links open the Steam store widget
+  for the app id in data-steam.
+-->
 <section id="work">
   <h2>Work</h2>
   <p class="label">Where I've built things</p>
@@ -79,6 +94,7 @@
   </div>
 </section>
 
+<!-- Skills (chips; .hot marks the core ones) and Education -->
 <section id="skills">
   <div class="two">
     <div>
@@ -100,6 +116,7 @@
   </div>
 </section>
 
+<!-- Projects: personal projects and game jams, newest first -->
 <section id="projects">
   <h2>Projects</h2>
   <p class="label">Games and side work</p>
@@ -127,6 +144,7 @@
   </div>
 </section>
 
+<!-- Recommendations: an excerpt of each letter, with the full PDF in recommendations/ -->
 <section id="recommendations">
   <h2>Recommendations</h2>
   <div class="row">
@@ -151,6 +169,7 @@
   </div>
 </section>
 
+<!-- contact -->
 <section id="contact" class="talk">
   <p class="big">Let's talk</p>
   <a class="btn" href="mailto:alvaro@cabrero.me">Get in touch</a><a class="btn alt" href="https://www.linkedin.com/in/alvaro-cabrero-barros-b3132916b/">LinkedIn</a><a class="btn alt" href="CV_AlvaroCabrero.pdf" download>Download CV (PDF)</a>
@@ -158,11 +177,20 @@
 <footer><span>Álvaro Cabrero Barros · Madrid, Spain</span><span>2026</span></footer>
 </div>
 
+<!--
+  Shared popup for YouTube videos, Steam widgets and enlarged carousel media.
+  Filled and opened by js/views/dialogView.js.
+-->
 <dialog class="vid" id="vid" aria-label="Video player">
   <div class="bar"><a id="vidlink" href="#" target="_blank" rel="noopener">Open on YouTube</a><button type="button" id="vidclose">Close</button></div>
   <div class="frame" id="vidframe"></div>
 </dialog>
 
+<!--
+  Scripts: plain classic scripts sharing the global CV namespace (no modules,
+  so the page also works when opened from the file system). Order matters:
+  models, then views, then controllers, then main.js, which wires them up.
+-->
 <!-- Model -->
 <script src="js/models/ragdoll.js"></script>
 <script src="js/models/media.js"></script>
