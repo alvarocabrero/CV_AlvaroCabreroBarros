@@ -25,7 +25,7 @@ SOFTWARE.
 Scope
 
 The MIT License above covers the source code of this site: the HTML, CSS and
-JavaScript files (index.html, css/, js/ and archive/index_alternativeanim.html).
+JavaScript files (index.html, css/ and js/).
 
 It does NOT cover the personal and third-party content in this repository,
 which is not licensed for reuse:
@@ -33,6 +33,6 @@ which is not licensed for reuse:
 - CV_AlvaroCabrero.pdf and the personal information shown on the page
   (© Álvaro Cabrero Barros, all rights reserved).
 - recommendations/: letters written by their respective authors.
-- images/ and archive/originals/: footage and stills from games, which remain
+- images/: footage and stills from games, which remain
   the property of their respective copyright holders.
 - icons/: personal branding (© Álvaro Cabrero Barros, all rights reserved).

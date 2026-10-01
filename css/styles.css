@@ -20,12 +20,12 @@
  * --bg     page background        --ink   main text
  * --mute   secondary text         --line  hairlines and borders
  * --acc    accent: pill, buttons, placeholders, focus ring
- * --onacc  text on the accent     --card  light surface (currently unused)
+ * --onacc  text on the accent
  * --d      display font (headings, labels)
  * --b      body font (paragraphs)
  * The root also pads for notches and home indicators (safe-area insets).
  */
-:root{--bg:#e9e8e6;--ink:#1c1c1c;--mute:#5f5d5a;--line:#cfcdca;--acc:#6b6863;--onacc:#fff;--card:#f4f3f1;
+:root{--bg:#e9e8e6;--ink:#1c1c1c;--mute:#5f5d5a;--line:#cfcdca;--acc:#6b6863;--onacc:#fff;
 --d:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;--b:"Literata",Georgia,serif;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *,*::before,*::after{box-sizing:inherit}
@@ -61,6 +61,8 @@ section{padding:3rem 0;border-top:1px solid var(--line)}
    "RECOMMENDATIONS" (about 9.6em), fits narrow phones */
 h2{font:800 clamp(min(2.2rem,(100vw - 2.8rem)/10),6vw,4rem)/1 var(--d);letter-spacing:-.035em;margin:0 0 1.5rem;text-transform:uppercase}
 .lead{font:400 clamp(1.3rem,2.6vw,1.9rem)/1.4 var(--b);max-width:32ch;margin:0}
+/* About: the paragraph under the lead */
+.intro{max-width:62ch;margin:1.5rem 0 0}
 /* the two-column entry used by Work, Education, Projects and Recommendations:
    name and meta on the left, details on the right */
 .row{display:grid;grid-template-columns:minmax(220px,34%) 1fr;gap:2rem;padding:2rem 0;border-top:1px solid var(--line)}
@@ -74,13 +76,14 @@ h2{font:800 clamp(min(2.2rem,(100vw - 2.8rem)/10),6vw,4rem)/1 var(--d);letter-sp
 .row p{margin:.2rem 0 0;max-width:66ch}
 
 /* ===== 4. Skills chips, contact block, footer ===== */
-/* pill-shaped skill tags; .hot (a whole list) or .hl (one chip) marks core skills */
+/* pill-shaped skill tags; .hot highlights a list of core skills */
 .chips{display:flex;flex-wrap:wrap;gap:.4rem;padding:0;margin:.3rem 0 1.4rem;list-style:none}
 .chips li{font:700 .82rem var(--d);padding:.2rem .75rem;border:1px solid var(--line);border-radius:99px;color:var(--mute);margin:0}
 .chips.hot li{color:var(--ink);border-color:var(--acc)}
-.chips li.hl{color:var(--ink);border-color:var(--acc)}
-/* Skills | Education side by side */
+/* Skills | Education side by side; each degree is a one-column row */
 .two{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.row.edu{grid-template-columns:1fr}
+.edu .meta{margin:0}
 /* "Let's talk" contact block and its buttons */
 .talk{padding:4rem 0 2rem}
 .talk .big{font:800 clamp(3rem,12vw,9rem)/.9 var(--d);letter-spacing:-.05em;text-transform:uppercase;margin:0 0 1.6rem}

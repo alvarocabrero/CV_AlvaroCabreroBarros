@@ -48,7 +48,6 @@ js/                   Scripts, organised as model / view / controller
 images/               Media shown in the Work carousels
 icons/                Favicon (SVG) and PNG icons
 recommendations/      Recommendation letters (PDF) linked from the page
-archive/              Old page variant and original media no longer used
 docs/                 Project documentation
 ```
 

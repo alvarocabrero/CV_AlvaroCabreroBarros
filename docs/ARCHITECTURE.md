@@ -33,7 +33,7 @@ split, and what every module does.
 
 | Path | Role |
 |---|---|
-| `index.html` | The whole page: markup and content. No inline scripts or `<style>` blocks; only a few one-off `style` attributes. |
+| `index.html` | The whole page: markup and content, with no inline scripts or styles. |
 | `css/styles.css` | All styles, in eight commented sections. |
 | `js/models/ragdoll.js` | Ragdoll physics and state machine. No DOM access. |
 | `js/models/media.js` | Media helpers (`CV.Media`) and the `CV.Gallery` list. No DOM access. |
@@ -49,19 +49,18 @@ split, and what every module does.
 | `recommendations/` | Recommendation letters (PDF), linked from the page. |
 | `CV_AlvaroCabrero.pdf` | One-page CV, linked from the top bar and the contact block. |
 | `CNAME` | Custom domain for GitHub Pages (`alvaro.cabrero.me`). |
-| `archive/` | Material no longer used by the page. See [below](#the-archive-folder). |
 
-### The `archive/` folder
+### Earlier material
 
-Nothing in `archive/` is loaded by the live page.
+An `archive/` folder used to hold an earlier single-file version of the site
+(`index_alternativeanim.html`, whose hero pill showed a stick figure with a
+sword and shield running through parallax trees and fighting orcs) and the
+original WebM videos and stills. Nothing used it, so it was removed. It is
+still in the git history and can be restored with:
 
-- `archive/index_alternativeanim.html` is an earlier single-file version of the
-  site. Its styles and scripts are inline, and instead of the ragdoll its hero
-  pill shows a procedural animation: a stick figure with a sword and shield
-  running to the right through parallax trees and fighting orcs. It is kept for
-  reference and can be opened directly in a browser.
-- `archive/originals/` holds the original media the current files were made
-  from (WebM videos and earlier stills).
+```bash
+git checkout 529d454 -- archive
+```
 
 ## Script loading and the `CV` namespace
 
@@ -165,7 +164,6 @@ See [RAGDOLL.md](RAGDOLL.md) for the physics in depth.
 | `push(x, y, dx, dy)` | Pushes joints near the pointer in the direction it moved. |
 | `wake()` | Leaves the idle state and cancels any get-up. |
 | `pose()`, `fit(p, m)`, `rise()`, `nearest(x, y)` | Internals: idle pose, pill collision, get-up step, joint lookup. |
-| `Ragdoll.BONES` | The bone table, exposed for debugging. |
 
 ### `CV.RagdollView` (`js/views/ragdollView.js`)
 

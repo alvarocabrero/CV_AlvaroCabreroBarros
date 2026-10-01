@@ -41,7 +41,7 @@ this layout it should be *Deploy from a branch*, branch `main`, folder
 *pages-build-deployment* entry in the repository's Actions tab shows each
 deployment and whether it succeeded.
 
-Everything in the repository is public once pushed, including `archive/`.
+Everything in the repository, including its history, is public once pushed.
 Do not commit anything you would not publish.
 
 ## Custom domain

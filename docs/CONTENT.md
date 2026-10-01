@@ -112,8 +112,8 @@ ffmpeg -i input.webm -an -c:v libx264 -profile:v high -pix_fmt yuv420p \
 ffmpeg -i input.png -vf "scale=1920:-2" -q:v 3 images/name.jpg
 ```
 
-Keep the originals (for example WebM captures) in `archive/originals/` so the
-web versions can be regenerated.
+Keep the original captures (for example WebM recordings) outside the
+repository, so the web versions can be regenerated without bloating it.
 
 Game footage and stills remain the property of their publishers; see
 [LICENSE](../LICENSE).
@@ -172,9 +172,6 @@ the core skills):
 <ul class="chips hot"><li>Unreal Engine 5</li><li>C++</li></ul>
 <ul class="chips"><li>Unity</li><li>C#</li></ul>
 ```
-
-To highlight a single chip in a normal list, give it the class `hl`:
-`<li class="hl">Physics</li>`.
 
 Each degree in Education is a one-column `.row` with an `h3`, a `.meta` line
 and a description. Languages go in the last `.meta` paragraph.

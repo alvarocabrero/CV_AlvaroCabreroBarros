@@ -72,8 +72,6 @@
     this.t=0;this.still=0;this.rising=false;this.riseT=0;
   }
   var R=Ragdoll.prototype;
-  /** Bone table, exposed for tests and debugging. */
-  Ragdoll.BONES=BONES;
 
   /**
    * Set the box size. While idle the pose is rebuilt at the new size;
