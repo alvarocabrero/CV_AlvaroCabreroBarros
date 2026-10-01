@@ -44,7 +44,8 @@ split, and what every module does.
 | `js/controllers/carouselController.js` | Carousel navigation, autoplay and video playback. |
 | `js/controllers/dialogController.js` | Opens the popup from links and carousels. |
 | `js/main.js` | Entry point: creates and connects everything. |
-| `images/` | Carousel media (JPEG images, H.264 MP4 videos). |
+| `images/` | Carousel media (WebP images, H.264 MP4 videos). |
+| `fonts/` | Self-hosted web fonts (Bricolage Grotesque, Literata) and their licences. |
 | `icons/` | Favicon (SVG), 32px PNG fallback and 180px Apple touch icon. |
 | `recommendations/` | Recommendation letters (PDF), linked from the page. |
 | `CV_AlvaroCabrero.pdf` | One-page CV, linked from the top bar and the contact block. |
@@ -253,7 +254,7 @@ can be embedded) and on `a.steam` (using `data-steam` and `data-title`).
 | JavaScript | Carousels stay empty placeholders and the ragdoll pill stays an empty grey pill. Every link (YouTube, Steam, PDFs) works as a normal link. |
 | `<dialog>` support | YouTube and Steam links open normally and carousels are not clickable. |
 | `IntersectionObserver` | Videos are not paused when scrolled off screen. |
-| Web fonts | The system fallbacks are used (Helvetica Neue/Arial, Georgia). Section titles still fit any width. The hero title is sized for Bricolage Grotesque; with the wider fallback it can overflow by a few pixels on phones 360–390px wide. |
+| Web fonts (`fonts/`) | The system fallbacks are used (Helvetica Neue/Arial, Georgia). Section titles still fit any width. The hero title is sized for Bricolage Grotesque; with the wider fallback it can overflow by a few pixels on phones 360–390px wide. |
 | A media file | That slide keeps showing the accent-coloured placeholder. |
 
 ## Accessibility
@@ -291,13 +292,28 @@ can be embedded) and on `a.steam` (using `data-steam` and `data-title`).
 
 ## Performance
 
+The first visit downloads about 390 KB (HTML, CSS, JS, three font files and
+the carousel images). Measured with a simulated slow mobile connection
+(1.6 Mbps, 150 ms), the page paints in about 0.5 s and finishes loading in
+about 2.8 s; on 4G it finishes in about 0.5 s.
+
 - No framework and a few hundred lines of JavaScript in total, loaded as
   plain files with no build step.
 - Videos use `preload="metadata"`, so only their size and duration load until
   they play. Off-screen and non-visible videos are paused.
 - The ragdoll canvas is small, and its backing store matches the device pixel
   ratio, so it is sharp without being oversized.
-- Fonts load with `display=swap`, so text shows immediately in the fallback font.
+- **Images** are WebP at 1280px wide (35–50 KB each), enough for the
+  enlarged popup (at most 960px wide) while staying small. Carousel images use
+  `loading="lazy"`. Slides are hidden with `opacity`, not `display:none`, so
+  lazy images are still laid out and load.
+- **Fonts** are self-hosted in `fonts/` instead of loaded from Google Fonts,
+  which removes a render-blocking stylesheet and two extra connections. The
+  `@font-face` rules use `unicode-range`, so only the Latin subsets download,
+  and `font-display: swap`, so text shows straight away in the fallback font.
+  They are deliberately not `<link rel="preload">`ed: measured on a slow
+  mobile connection, preloading delayed the first paint by competing with
+  the stylesheet for bandwidth.
 
 ## Browser support
 
@@ -313,6 +329,6 @@ browsers degrade as described in [Progressive enhancement](#progressive-enhancem
   user-supplied text ever reaches them.
 - YouTube embeds use the youtube-nocookie.com domain and a
   `strict-origin-when-cross-origin` referrer policy.
-- There are no cookies, analytics, forms or third-party scripts. The only
-  third-party requests are Google Fonts and, when opened, the YouTube or Steam
-  iframe.
+- There are no cookies, analytics, forms or third-party scripts. The page
+  makes no third-party requests until a YouTube or Steam popup is opened, which
+  loads that iframe.

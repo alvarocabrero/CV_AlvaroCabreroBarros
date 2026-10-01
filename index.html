@@ -2,15 +2,14 @@
 <!--
   Álvaro Cabrero Barros · personal site and CV (https://alvaro.cabrero.me).
   Plain HTML, CSS and JavaScript, no build step. This file holds the content;
-  styles live in css/styles.css and behaviour in js/. See README.md and docs/.
+  styles live in css/styles.css (web fonts in fonts/) and behaviour in js/.
+  See README.md and docs/.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Álvaro Cabrero Barros · Animation Programmer</title>
-<!-- fonts: Bricolage Grotesque (display) and Literata (body); system fonts are the fallback -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap">
 <link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="icons/icon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
@@ -43,7 +42,7 @@
 <!--
   Work. Each entry is a .row: name and meta on the left, details on the right.
   A .car placeholder becomes a media carousel: data-title is its caption and
-  data-imgs a comma-separated list of images/videos (.jpg, .mp4, .webm).
+  data-imgs a comma-separated list of images/videos (.webp/.jpg images, .mp4/.webm videos).
   YouTube links open in the popup; a.steam links open the Steam store widget
   for the app id in data-steam.
 -->
@@ -55,7 +54,7 @@
     <div>
       <div class="gallery">
         <div class="car" data-title="Turok: Origins" data-imgs="images/turok-origins-1.mp4,images/turok-origins-2.mp4,images/turok-origins-3.mp4" role="region" aria-roledescription="carousel" aria-label="Turok: Origins images"></div>
-        <div class="car" data-title="John Wick" data-imgs="images/john-wick-1.jpg,images/john-wick-2.jpg,images/john-wick-3.jpg" role="region" aria-roledescription="carousel" aria-label="John Wick images"></div>
+        <div class="car" data-title="John Wick" data-imgs="images/john-wick-1.webp,images/john-wick-2.webp,images/john-wick-3.webp" role="region" aria-roledescription="carousel" aria-label="John Wick images"></div>
       </div>
       <ul>
       <li>Primary bridge between the animation and programming teams, aligning technical and artistic goals.</li>

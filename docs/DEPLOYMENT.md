@@ -96,4 +96,4 @@ iPhone, which only plays H.264 MP4 video).
 | The site shows on `github.io` instead of the domain | `CNAME` was removed or changed, or the DNS record is wrong. |
 | Changes do not appear | Deployment still running (check Actions), or browser cache: force reload. |
 | The page scrolls sideways on phones | A new long word or wide element. Long single words in titles are the usual cause; check at 320px. |
-| Fonts look different | Google Fonts did not load (offline or blocked); the system fallback is in use. |
+| Fonts look different | A file in `fonts/` failed to load (check the paths in `css/styles.css`); the system fallback is in use. |

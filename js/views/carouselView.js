@@ -29,10 +29,11 @@
     var title=gallery.title,h='<div class="frame"><div class="track" tabindex="0" aria-label="'+title+' slides">',d='';
     gallery.srcs.forEach(function(src,i){
       // videos: muted + playsinline so mobile browsers allow autoplay;
-      // preload="metadata" avoids downloading every clip up front
+      // preload="metadata" avoids downloading every clip up front.
+      // images: loading="lazy" defers ones far below the viewport
       h+='<figure class="slide">'+(CV.Media.isVideo(src)
         ?'<video src="'+src+'" muted loop playsinline preload="metadata" aria-label="'+title+' video '+(i+1)+'"></video>'
-        :'<img src="'+src+'" alt="'+title+' image '+(i+1)+'">')+'</figure>';
+        :'<img src="'+src+'" loading="lazy" alt="'+title+' image '+(i+1)+'">')+'</figure>';
       d+='<button type="button" aria-label="Go to slide '+(i+1)+'"></button>';
     });
     el.innerHTML=h+'</div><div class="cap">'+title+'</div></div><div class="dots">'+d+'</div>';

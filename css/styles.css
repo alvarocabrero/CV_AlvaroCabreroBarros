@@ -16,6 +16,20 @@
  * breakpoints. Below 820px the two-column rows stack (section 8).
  */
 
+/* Web fonts, served from fonts/ (SIL Open Font License, see fonts/README.md).
+ * Latin and Latin Extended subsets of Google Fonts' files. unicode-range makes
+ * the browser download a subset only when the page uses one of its characters,
+ * so normally only the three Latin files load. Bricolage Grotesque is a
+ * variable font covering weights 400–800, and regular Literata covers 400–600
+ * (600 is used for bold text such as <strong>). font-display:swap shows the
+ * fallback font straight away and swaps when the web font arrives. */
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:400 800;font-display:swap;src:url(../fonts/bricolage-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:400 800;font-display:swap;src:url(../fonts/bricolage-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Literata";font-style:normal;font-weight:400 600;font-display:swap;src:url(../fonts/literata-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Literata";font-style:normal;font-weight:400 600;font-display:swap;src:url(../fonts/literata-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Literata";font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/literata-italic-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Literata";font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/literata-italic-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+
 /* ===== 1. Design tokens and base elements =====
  * --bg     page background        --ink   main text
  * --mute   secondary text         --line  hairlines and borders
@@ -103,9 +117,10 @@ footer{border-top:1px solid var(--line);padding:1.4rem 0 3rem;font:700 .9rem var
 .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;aspect-ratio:16/10;scroll-behavior:smooth;overscroll-behavior-x:contain}
 .track::-webkit-scrollbar{display:none}
 .slide{flex:0 0 100%;scroll-snap-align:start;position:relative;background:var(--acc);margin:0}
-/* media stay hidden until loaded (.has), showing the accent colour as a placeholder */
-.slide img,.slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
-.slide.has img,.slide.has video{display:block}
+/* media stay transparent until loaded (.has), showing the accent colour as a placeholder.
+   Transparent rather than display:none, so lazy-loaded images still get laid out and load. */
+.slide img,.slide video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+.slide.has img,.slide.has video{opacity:1}
 .frame{position:relative;border-radius:10px;overflow:hidden}
 /* caption on a soft gradient so white text stays readable on any image */
 .cap{position:absolute;left:0;right:0;bottom:0;padding:1.6rem .9rem .8rem;pointer-events:none;color:#fff;font:800 clamp(1.1rem,3vw,1.6rem)/1.05 var(--d);letter-spacing:-.03em;text-shadow:0 1px 6px rgba(0,0,0,.35);background:linear-gradient(transparent,rgba(0,0,0,.4))}

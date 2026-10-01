@@ -65,7 +65,7 @@ A carousel is an empty `div.car` that the scripts fill in:
   <div class="car" data-title="Turok: Origins"
        data-imgs="images/turok-origins-1.mp4,images/turok-origins-2.mp4,images/turok-origins-3.mp4"
        role="region" aria-roledescription="carousel" aria-label="Turok: Origins images"></div>
-  <div class="car" data-title="John Wick" data-imgs="images/john-wick-1.jpg,images/john-wick-2.jpg,images/john-wick-3.jpg"
+  <div class="car" data-title="John Wick" data-imgs="images/john-wick-1.webp,images/john-wick-2.webp,images/john-wick-3.webp"
        role="region" aria-roledescription="carousel" aria-label="John Wick images"></div>
 </div>
 ```
@@ -93,8 +93,10 @@ Carousels crop media to fill the frame (`object-fit: cover`):
 So **keep the subject in the centre**: the sides are cut off on phones. The
 enlarged popup shows the whole image or video without cropping.
 
-**Images:** JPEG, 1920×1080 or similar, around 300–400 KB. The current
-images are 1920×1080.
+**Images:** WebP, 1280px wide, ideally under 60 KB each. That is sharp in
+the carousel on high-DPI phones and in the enlarged popup, which is at most
+960px wide. The current images are 1280×720 at 35–50 KB. Every current
+browser supports WebP.
 
 **Videos:** H.264 MP4. This is the only format every current browser plays,
 Safari on iPhone included. Videos play muted, so remove the audio track to save
@@ -108,8 +110,8 @@ With [ffmpeg](https://ffmpeg.org/):
 ffmpeg -i input.webm -an -c:v libx264 -profile:v high -pix_fmt yuv420p \
        -vf "scale=1170:-2" -crf 23 -preset slow -movflags +faststart images/name.mp4
 
-# JPEG still at 1920px wide
-ffmpeg -i input.png -vf "scale=1920:-2" -q:v 3 images/name.jpg
+# WebP still at 1280px wide
+ffmpeg -i input.png -vf "scale=1280:-2" -c:v libwebp -quality 78 images/name.webp
 ```
 
 Keep the original captures (for example WebM recordings) outside the
