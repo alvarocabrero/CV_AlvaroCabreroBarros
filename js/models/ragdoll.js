@@ -39,6 +39,8 @@
     [0,2,.41,.12],            // soft: head – hip
     [7,9,.09,.03]             // soft: knee – knee
   ];
+  // index of the knee–knee helper, which is switched off while getting up (see step)
+  var KNEES=BONES.length-1;
   // idle pose, offsets from the box centre in H units (feet on the floor)
   // x grows to the right, y grows downwards (canvas convention).
   var IDLE=[[0,-.32],[0,-.19],[0,.09],[-.125,-.105],[-.14,.045],[.125,-.105],[.14,.045],[-.045,.275],[-.055,.4645],[.045,.275],[.055,.4645]];
@@ -165,7 +167,8 @@
    * While idle, only the idle clock and pose advance. Otherwise:
    * 1. Verlet integration: each joint keeps 99.5% of its velocity and falls
    *    under gravity (0.004·H per frame², fading to 0 while rising).
-   * 2. Eight solver passes, each one enforcing every bone length, keeping all
+   * 2. Eight solver passes, each one enforcing every bone length (except the
+   *    knee–knee helper while rising), keeping all
    *    joints inside the pill (head margin 0.085·H, others 0.03·H) and pinning
    *    the grabbed joint to the pointer.
    * 3. State: dragging cancels any get-up; otherwise once the fastest joint
@@ -178,6 +181,10 @@
     for(i=0;i<P.length;i++){var p=P[i],vx=(p.x-p.px)*.995,vy=(p.y-p.py)*.995;p.px=p.x;p.py=p.y;p.x+=vx;p.y+=vy+gr}
     for(j=0;j<8;j++){
       for(i=0;i<BONES.length;i++){
+        // the knee–knee helper only keeps a fixed distance, it does not know which knee belongs on which
+        // side: if the legs are crossed when the figure gets up, it holds them crossed against the pull
+        // of rise() (an inverted-Y deadlock until the 5 s timeout). rise() sets the leg order anyway.
+        if(i===KNEES&&this.rising)continue;
         // move both ends half the length error each (scaled by stiffness)
         var b=BONES[i],A=P[b[0]],C=P[b[1]],dx=C.x-A.x,dy=C.y-A.y,d=Math.hypot(dx,dy)||.001,f=(d-b[2]*H)/d*.5*b[3];
         A.x+=dx*f;A.y+=dy*f;C.x-=dx*f;C.y-=dy*f;

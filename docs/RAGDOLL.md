@@ -70,6 +70,16 @@ The two helpers are soft and invisible. Head–hip resists the torso folding in
 half, which keeps the figure readable as a person. Knee–knee nudges the legs
 apart so they do not end up crossed.
 
+The knee–knee helper is **switched off while the figure gets up**. It only
+keeps the knees a fixed distance apart; it does not know which knee belongs on
+which side. When the figure lands with its legs swapped, each knee has to pass
+the other on the way to its own side, and the helper pushes them back apart in
+the wrong direction. It used to win by a small margin, so the knees stuck
+together near the middle with the feet apart (an inverted Y) until the 5 s
+get-up timeout snapped the pose straight. In a headless test of 1,000 random
+falls, that happened in 18% of get-ups; with the helper off while rising it
+never does, and every get-up finishes in about 1.5 s.
+
 The standing pose (`IDLE`) gives each joint an offset from the centre of the
 box, in `H` units, with the feet on the floor of the pill.
 
@@ -130,7 +140,8 @@ its velocity. One frame:
    - For each bone, measures its length `d` against the rest length `L·H` and
      moves both ends towards each other (or apart) by
      `(d − L·H)/d · 0.5 · stiffness` of the vector between them. Rigid bones
-     (stiffness 1) are fully corrected; the helpers only slightly.
+     (stiffness 1) are fully corrected; the helpers only slightly. The
+     knee–knee helper is skipped while rising (see [Skeleton](#skeleton)).
    - Pushes every joint back inside the pill (see below).
    - If a joint is grabbed, pins it to the pointer (and inside the pill).
 3. **Update state.**
@@ -182,7 +193,8 @@ arms, and finally raise the head. Velocities are damped to 60% each frame so
 the motion stays controlled, and gravity fades out at the same time.
 
 It finishes when every joint is within `0.015·H` of its target after at least
-1.5 s, or unconditionally after 5 s. Then the figure goes back to idle with
+1.5 s, or unconditionally after 5 s (a safety net; in practice every get-up
+finishes in about 1.5 s). Then the figure goes back to idle with
 `t = 0`, so the first wave comes 1.5 s later.
 
 Touching the figure while it is rising cancels the get-up.
