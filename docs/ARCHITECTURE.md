@@ -49,6 +49,7 @@ split, and what every module does.
 | `icons/` | Favicon (SVG), 32px PNG fallback and 180px Apple touch icon. |
 | `recommendations/` | Recommendation letters (PDF), linked from the page. |
 | `CV_AlvaroCabrero.pdf` | One-page CV, linked from the top bar and the contact block. |
+| `cv/` | Source of the CV PDF (`cv.html`), its fonts (Open Sans) and how to rebuild it. |
 | `CNAME` | Custom domain for GitHub Pages (`alvaro.cabrero.me`). |
 
 ### Earlier material

@@ -38,6 +38,7 @@ section.
 index.html            The page: all content and markup
 CNAME                 Custom domain for GitHub Pages
 CV_AlvaroCabrero.pdf  One-page CV, linked from the page
+cv/                   Source of the CV PDF (HTML) and how to rebuild it
 LICENSE               MIT for the code; personal content, game media and fonts excluded
 css/styles.css        All styles, in eight commented sections
 js/                   Scripts, organised as model / view / controller

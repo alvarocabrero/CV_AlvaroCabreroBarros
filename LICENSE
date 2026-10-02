@@ -38,3 +38,6 @@ which is not licensed for reuse:
 - icons/: personal branding (© Álvaro Cabrero Barros, all rights reserved).
 - fonts/: Bricolage Grotesque and Literata, by their respective authors,
   licensed under the SIL Open Font License 1.1 (see fonts/README.md).
+- cv/fonts/: Open Sans, by its authors, licensed under the SIL Open Font
+  License 1.1 (see cv/fonts/OFL-OpenSans.txt). The content of cv/cv.html is
+  personal information, like CV_AlvaroCabrero.pdf.

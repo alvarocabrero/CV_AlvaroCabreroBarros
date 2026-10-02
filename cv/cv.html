@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!--
+  Source of CV_AlvaroCabrero.pdf, the one-page CV linked from the site.
+  Keep it in sync with index.html. To rebuild the PDF, see cv/README.md.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Álvaro Cabrero Barros · CV</title>
+<style>
+/* Open Sans (SIL Open Font License, cv/fonts/OFL-OpenSans.txt): Latin and Latin Extended
+   subsets of Google Fonts' files, as static instances (one file per weight) so Chrome embeds
+   them in the PDF as ordinary TrueType fonts rather than Type 3. See cv/README.md. */
+@font-face{font-family:"Open Sans";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/opensans-400i-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Open Sans";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/opensans-400i-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/opensans-400-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/opensans-400-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/opensans-600-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/opensans-600-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/opensans-700-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:700;font-display:swap;src:url(fonts/opensans-700-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:800;font-display:swap;src:url(fonts/opensans-800-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Open Sans";font-style:normal;font-weight:800;font-display:swap;src:url(fonts/opensans-800-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+:root{--h:"Open Sans",sans-serif;--b:"Open Sans",sans-serif;--hw:800}
+@page{size:A4;margin:0}
+*{box-sizing:border-box}
+html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;color:#1c1c1c;font:400 8.6pt/1.4 var(--b);background:#fff}
+.sheet{width:210mm;min-height:297mm;padding:10mm 14mm 8mm}
+a{color:inherit;text-decoration:underline;text-decoration-color:#9a9895;text-underline-offset:1.5pt}
+h1{font:var(--hw) 25pt/1.05 var(--h);letter-spacing:-.02em;margin:0}
+.role{font:700 11pt var(--h);color:#5f5d5a;margin:1mm 0 0}
+.contact{font:400 8.3pt var(--b);color:#5f5d5a;margin:1.6mm 0 0}
+.contact a{text-decoration-color:#bdbbb8}
+h2{font:800 8.6pt var(--h);letter-spacing:.14em;text-transform:uppercase;margin:3.4mm 0 1.2mm;padding-bottom:.8mm;border-bottom:.8pt solid #1c1c1c}
+p{margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:1.4mm;margin:1.4mm 0 0;padding:0;list-style:none}
+.chips li{font:600 7.8pt var(--h);padding:.3mm 2.4mm;border:.7pt solid #9a9895;border-radius:99px}
+.chips li.hot{background:#ecebe9;border-color:#5f5d5a}
+.entry{margin:1.8mm 0 0;break-inside:avoid}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:4mm}
+.head b{font:700 9.2pt var(--h)}
+.head .sub{font:400 8.6pt var(--b);color:#5f5d5a}
+.head .when{font:400 8.3pt var(--b);color:#5f5d5a;white-space:nowrap}
+ul{margin:.6mm 0 0;padding-left:4.2mm}
+li{margin:.25mm 0}
+.entry>p{margin-top:.4mm}
+.small{font-size:8.3pt;color:#5f5d5a}
+.quote{font-style:italic}
+.more{margin-top:3mm;font-size:8.3pt;color:#5f5d5a}
+</style>
+</head>
+<body>
+<div class="sheet">
+<h1>Álvaro Cabrero Barros</h1>
+<p class="role">Animation Programmer</p>
+<p class="contact">Madrid, Spain · <a href="mailto:alvaro@cabrero.me">alvaro@cabrero.me</a> · <a href="https://alvaro.cabrero.me/">alvaro.cabrero.me</a> · <a href="https://www.linkedin.com/in/alvaro-cabrero-barros-b3132916b/">LinkedIn</a></p>
+
+<h2>About me</h2>
+<p>Animation programmer who builds the systems that make game characters move well, in Unreal Engine 5 (C++). Experience in AAA and indie development, bridging technical and artistic teams to raise the visual quality of gameplay. I learn fast and enjoy multidisciplinary teams.</p>
+
+<h2>Skills</h2>
+<ul class="chips"><li class="hot">Unreal Engine 5</li><li class="hot">C++</li><li>Unity</li><li>C#</li><li>Inverse Kinematics (IK)</li><li>Physics</li><li>Animation Systems</li></ul>
+
+<h2>Work experience</h2>
+<div class="entry">
+  <div class="head"><span><b>Saber Interactive</b> <span class="sub">· Animation Programmer</span></span><span class="when">Madrid · Nov 2023 – present</span></div>
+  <ul>
+    <li>Primary bridge between the animation and programming teams, aligning technical and artistic goals.</li>
+    <li>Implemented core gameplay mechanics and animations on AAA projects: <b>Turok: Origins</b> (<a href="https://www.youtube.com/watch?v=_f3btFcO1CM">story</a> and <a href="https://www.youtube.com/watch?v=rf-Hp_OI054">gameplay</a> trailers, <a href="https://store.steampowered.com/app/1967610/Turok_Origins/">Steam</a>) and the <b>Untitled John Wick</b> game (<a href="https://www.youtube.com/watch?v=Ap5JlQ680E8">reveal trailer</a>, <a href="https://store.steampowered.com/app/2947860/Untitled_John_Wick_Game/">Steam</a>).</li>
+    <li>Create and refine animation systems, custom Animation Blueprint nodes, and physics and IK for dynamic character and creature movement.</li>
+    <li>Build UE5 gameplay in C++, using the Gameplay Ability System (GAS) for abilities and mechanics.</li>
+  </ul>
+</div>
+<div class="entry">
+  <div class="head"><span><b>PadaOne Games</b> <span class="sub">· Software Engineering Intern</span></span><span class="when">Madrid · Nov 2022 – Jun 2023</span></div>
+  <p>AI Behavior Trees in Unity for enemy senses in a stealth game, AR tools for the design team, and legacy code modernization.</p>
+</div>
+<div class="entry">
+  <div class="head"><span><b>Vicomtech</b> <span class="sub">· Research Assistant</span></span><span class="when">San Sebastián · Aug 2021 – Aug 2022</span></div>
+  <p>Built collaborative AR apps (HoloLens, Android, iOS, PC, Web) with Unity, ARFoundation and React with Three.js for European projects H2020 ARETE, H2020 RESCUER and 5G EUSKADI. Co-author of “Collaborative Augmented Reality Tools for Behavioural Lessons” (<a href="https://doi.org/10.1007/978-3-031-26876-2_10">DOI</a>).</p>
+</div>
+<div class="entry">
+  <div class="head"><span><b>Vicomtech</b> <span class="sub">· Software Engineering Intern</span></span><span class="when">San Sebastián · Jan – Jun 2021</span></div>
+  <p>Collaborative musical AR environment for education in H2020 ARETE, with Unity and Vuforia (<a href="https://youtube.com/playlist?list=PLBQpnXrjoMXHevVcbpLc-FHBnwEPW0HEd">demo videos</a>).</p>
+</div>
+<div class="entry">
+  <div class="head"><span><b>IECISA (CGSI)</b> <span class="sub">· IT Intern</span></span><span class="when">Oviedo · Feb – Mar 2020</span></div>
+  <p>Application deployment with Docker, system administration troubleshooting and database management.</p>
+</div>
+
+<h2>Projects</h2>
+<div class="entry">
+  <div class="head"><span><b>Verso</b> <span class="sub">· Android app for poetry and lyrics, Kotlin, Jetpack Compose</span></span><span class="when"><a href="https://github.com/alvarocabrero/Verso">Source</a> · <a href="https://github.com/alvarocabrero/Verso/releases/latest">Download</a></span></div>
+  <p>Notebook for poems and song lyrics in Spanish that analyses the text as you type: metrical syllables, rhyme scheme and literary devices. Records voice memos and demos and links them to their songs.</p>
+</div>
+<div class="entry">
+  <div class="head"><span><b>LunarPunk</b> <span class="sub">· Tower attack game, Unreal Engine 4, C++</span></span><span class="when"><a href="https://www.youtube.com/watch?v=NX6QrqMngAg">Video</a> · <a href="https://github.com/Walking-Octopus-Games/LunarPunk">Source</a></span></div>
+  <p>Programmed gameplay, animations and AI; led the FMOD integration; automated builds with Jenkins; refactored the codebase for performance and robustness.</p>
+</div>
+<div class="entry">
+  <div class="head"><span><b>Game jams</b></span></div>
+  <p><a href="https://jgona.itch.io/tetrisnator2">Madrid in Game</a> (Oct 2023), <a href="https://globalgamejam.org/2023/games/warfarm-milenium-potato-9">Global Game Jam</a> (Jan 2023), <a href="https://ldjam.com/events/ludum-dare/48/atlantis-gold/">Ludum Dare 48</a>.</p>
+</div>
+
+<h2>Education &amp; languages</h2>
+<div class="entry">
+  <div class="head"><span><b>Master’s Degree in Video Game Development</b> <span class="sub">· Universidad Complutense de Madrid · Capstone: LunarPunk</span></span><span class="when">2022 – 2023</span></div>
+</div>
+<div class="entry">
+  <div class="head"><span><b>Bachelor’s Degree in Computer Software Engineering</b> <span class="sub">· Universidad de Oviedo</span></span><span class="when">2015 – 2021</span></div>
+  <p>Thesis: Collaborative Music Environment in Augmented Reality, completed as an intern at Vicomtech.</p>
+</div>
+<p class="entry">Spanish (native) · English (B2)</p>
+
+<h2>Recommendations</h2>
+<div class="entry">
+  <div class="head"><span><b>Mikel Zorrilla</b> <span class="sub">· Director of Digital Media, Vicomtech</span></span><span class="when"><a href="https://alvaro.cabrero.me/recommendations/Recommendation-Vicomtech-Mikel-Zorrilla.pdf">Full letter</a></span></div>
+  <p class="quote">“He stood out for his ability to develop software in immersive Web environments and using engines such as Unity. He is very hard-working, very responsible with his tasks, and cooperative.”</p>
+</div>
+<div class="entry">
+  <div class="head"><span><b>Pedro A. González Calero</b> <span class="sub">· Professor, Universidad Complutense de Madrid</span></span><span class="when"><a href="https://alvaro.cabrero.me/recommendations/Recomendacion-UCM-Pedro-Gonzalez-Calero.pdf">Full letter (Spanish)</a></span></div>
+  <p class="quote">“I can highlight his eagerness to learn, his ability to work in a team and, above all, his firm commitment to the tasks he takes on.”</p>
+</div>
+
+<p class="more">More at <a href="https://alvaro.cabrero.me/">alvaro.cabrero.me</a></p>
+</div>
+</body>
+</html>

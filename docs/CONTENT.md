@@ -201,9 +201,14 @@ start the note with `Translated from Spanish · `, as in the existing entry.
 
 ## The CV PDF
 
-Replace `CV_AlvaroCabrero.pdf`, keeping the same file name, and every
-download link keeps working: the top bar and the contact block both link to
-it. If you rename it, update the two `href`s in `index.html`.
+The CV is generated from `cv/cv.html`, a one-page A4 layout of the same
+content in condensed form. When you change the page, update `cv/cv.html` too
+and rebuild the PDF; [cv/README.md](../cv/README.md) has the one-line command
+and the manual steps.
+
+Keep the file name `CV_AlvaroCabrero.pdf` and every download link keeps
+working: the top bar and the contact block both link to it. If you rename it,
+update the two `href`s in `index.html`.
 
 ## Contact links and footer
 
