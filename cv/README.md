@@ -29,8 +29,8 @@ or open it). If it spills onto a second page, shorten the text.
 ## Fonts
 
 `fonts/` holds Open Sans (SIL Open Font License, `fonts/OFL-OpenSans.txt`):
-the Latin and Latin Extended subsets from Google Fonts, regular 400, 600, 700
-and 800 and italic 400.
+the Latin and Latin Extended subsets from Google Fonts, weights 400, 600, 700
+and 800.
 
 Google serves Open Sans as a variable font, which Chrome embeds in PDFs as
 Type 3 fonts; some viewers render those poorly and some CV-parsing tools read
