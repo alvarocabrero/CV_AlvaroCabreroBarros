@@ -292,7 +292,7 @@ can be embedded) and on `a.steam` (using `data-steam` and `data-title`).
 
 ## Performance
 
-The first visit downloads about 390 KB (HTML, CSS, JS, three font files and
+The first visit downloads about 340 KB (HTML, CSS, JS, two font files and
 the carousel images). Measured with a simulated slow mobile connection
 (1.6 Mbps, 150 ms), the page paints in about 0.5 s and finishes loading in
 about 2.8 s; on 4G it finishes in about 0.5 s.
