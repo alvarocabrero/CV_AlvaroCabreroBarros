@@ -11,7 +11,6 @@ touching any CSS or JavaScript. This guide shows the markup patterns to copy.
 - [Steam links](#steam-links)
 - [Projects](#projects)
 - [Skills and education](#skills-and-education)
-- [Recommendations](#recommendations)
 - [The CV PDF](#the-cv-pdf)
 - [Contact links and footer](#contact-links-and-footer)
 - [Top bar links](#top-bar-links)
@@ -28,7 +27,6 @@ header               "Hey! I'm Álvaro." + ANIMATION / SYSTEMS& / GAMEPLAY (with
 #work                Work: one .row per job
 #skills              Skills (chips) | Education
 #projects            Projects: one .row per project, newest first
-#recommendations     Recommendations: one .row per letter
 #contact             Let's talk: e-mail, LinkedIn, CV buttons
 footer               name, place, year
 dialog#vid           popup used by the scripts (do not edit)
@@ -177,27 +175,6 @@ the core skills):
 
 Each degree in Education is a one-column `.row` with an `h3`, a `.meta` line
 and a description. Languages go in the last `.meta` paragraph.
-
-## Recommendations
-
-Each letter is a `.row` with the person on the left and an excerpt on the
-right. The PDF goes in `recommendations/`:
-
-```html
-<div class="row">
-  <div><p class="name">Name Surname</p><p class="meta">Role, Organisation<br>How you worked together</p></div>
-  <div>
-    <blockquote class="quote">
-      <p>First paragraph of the excerpt.</p>
-      <p>Second paragraph.</p>
-    </blockquote>
-    <p class="note"><a href="recommendations/File.pdf" download>Download the full letter (PDF)</a></p>
-  </div>
-</div>
-```
-
-The quote marks are added by CSS: do not type them. For a translated letter,
-start the note with `Translated from Spanish · `, as in the existing entry.
 
 ## The CV PDF
 

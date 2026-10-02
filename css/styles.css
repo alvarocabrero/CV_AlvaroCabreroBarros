@@ -8,18 +8,17 @@
  *   4. Skills chips, contact block, footer
  *   5. Media carousels
  *   6. Popup dialog (YouTube, Steam, enlarged media)
- *   7. Recommendation quotes
- *   8. Narrow screens (≤ 820px)
+ *   7. Narrow screens (≤ 820px)
  *
  * Fluid type uses clamp(min, preferred, max): sizes follow the viewport width
  * (vw) between a minimum and a maximum, so most of the layout needs no
- * breakpoints. Below 820px the two-column rows stack (section 8).
+ * breakpoints. Below 820px the two-column rows stack (section 7).
  */
 
 /* Web fonts, served from fonts/ (SIL Open Font License, see fonts/README.md).
  * Latin and Latin Extended subsets of Google Fonts' files. unicode-range makes
  * the browser download a subset only when the page uses one of its characters,
- * so normally only the three Latin files load. Bricolage Grotesque is a
+ * so normally only the two Latin files load. Bricolage Grotesque is a
  * variable font covering weights 400–800, and regular Literata covers 400–600
  * (600 is used for bold text such as <strong>). font-display:swap shows the
  * fallback font straight away and swaps when the web font arrives. */
@@ -27,8 +26,6 @@
 @font-face{font-family:"Bricolage Grotesque";font-style:normal;font-weight:400 800;font-display:swap;src:url(../fonts/bricolage-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
 @font-face{font-family:"Literata";font-style:normal;font-weight:400 600;font-display:swap;src:url(../fonts/literata-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 @font-face{font-family:"Literata";font-style:normal;font-weight:400 600;font-display:swap;src:url(../fonts/literata-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
-@font-face{font-family:"Literata";font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/literata-italic-latin.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
-@font-face{font-family:"Literata";font-style:italic;font-weight:400;font-display:swap;src:url(../fonts/literata-italic-latin-ext.woff2) format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
 
 /* ===== 1. Design tokens and base elements =====
  * --bg     page background        --ink   main text
@@ -71,13 +68,13 @@ a{color:var(--ink);text-decoration-color:var(--acc);text-underline-offset:4px}
 /* ===== 3. Sections, rows and typography ===== */
 section{padding:3rem 0;border-top:1px solid var(--line)}
 .label{font:700 .95rem var(--d);color:var(--mute);margin:0 0 2rem}
-/* section titles. The minimum is capped so the longest one,
-   "RECOMMENDATIONS" (about 9.6em), fits narrow phones */
-h2{font:800 clamp(min(2.2rem,(100vw - 2.8rem)/10),6vw,4rem)/1 var(--d);letter-spacing:-.035em;margin:0 0 1.5rem;text-transform:uppercase}
+/* section titles. The minimum is capped so the longest one, "EDUCATION"
+   (about 5em, 5.6em in the fallback font), fits even very narrow screens */
+h2{font:800 clamp(min(2.2rem,(100vw - 2.8rem)/5.8),6vw,4rem)/1 var(--d);letter-spacing:-.035em;margin:0 0 1.5rem;text-transform:uppercase}
 .lead{font:400 clamp(1.3rem,2.6vw,1.9rem)/1.4 var(--b);max-width:32ch;margin:0}
 /* About: the paragraph under the lead */
 .intro{max-width:62ch;margin:1.5rem 0 0}
-/* the two-column entry used by Work, Education, Projects and Recommendations:
+/* the two-column entry used by Work, Education and Projects:
    name and meta on the left, details on the right */
 .row{display:grid;grid-template-columns:minmax(220px,34%) 1fr;gap:2rem;padding:2rem 0;border-top:1px solid var(--line)}
 .row:first-of-type{border-top:0;padding-top:0}
@@ -153,18 +150,7 @@ dialog.vid.steam .frame{aspect-ratio:auto;height:190px;background:transparent}
 /* enlarged media are letterboxed, never cropped */
 dialog.vid .frame video,dialog.vid .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 
-/* ===== 7. Recommendation quotes =====
- * A large opening quote mark above the text, and a closing one after the last paragraph. */
-.quote{margin:0;max-width:66ch;quotes:"\201C" "\201D"}
-.quote::before{content:"\201C";display:block;font:800 4.5rem/.7 var(--d);height:2.2rem;color:var(--acc)}
-.quote p{margin:0 0 .9rem;font:italic 400 clamp(1.1rem,1.9vw,1.3rem)/1.6 var(--b)}
-.quote p:last-child{margin-bottom:0}
-.quote p:last-child::after{content:"\201D"}
-/* "Download the full letter (PDF)" line under each quote */
-.row .note{font:700 .85rem var(--d);color:var(--mute);margin:.8rem 0 0}
-.row .note a{color:var(--ink)}
-
-/* ===== 8. Narrow screens (≤ 820px) =====
+/* ===== 7. Narrow screens (≤ 820px) =====
  * Rows and Skills/Education stack into one column; the top bar keeps only the
  * name and the Contact link (links with class .h are hidden); the secondary buttons wrap below the main one;
  * carousels switch to a portrait 4:5 frame; captions and dots adjust. */

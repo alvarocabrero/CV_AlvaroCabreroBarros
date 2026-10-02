@@ -17,13 +17,13 @@ Plain HTML, CSS and JavaScript: no build step, no framework, no dependencies.
   and a single breakpoint at 820px.
 - **Accessible:** keyboard navigation, visible focus, labelled controls, a
   native modal dialog, and support for reduced motion.
-- **Downloads:** a one-page CV and the full recommendation letters, as PDFs.
+- **Download:** a one-page CV as a PDF, generated from `cv/cv.html`.
 
 ## Documentation
 
 | Document | Contents |
 |---|---|
-| [docs/CONTENT.md](docs/CONTENT.md) | Editing the site: adding jobs, projects, carousels, videos, YouTube/Steam links, recommendations; preparing media. |
+| [docs/CONTENT.md](docs/CONTENT.md) | Editing the site: adding jobs, projects, carousels, videos, YouTube/Steam links, the CV PDF; preparing media. |
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How the code is organised: files, script loading, model–view–controller, module reference, accessibility, responsive layout, browser support. |
 | [docs/RAGDOLL.md](docs/RAGDOLL.md) | The ragdoll in depth: skeleton, states, idle animation, physics, collisions, getting up, input, constants and tuning. |
 | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Running locally, publishing with GitHub Pages, the custom domain, the testing checklist and troubleshooting. |
@@ -40,7 +40,7 @@ CNAME                 Custom domain for GitHub Pages
 CV_AlvaroCabrero.pdf  One-page CV, linked from the page
 cv/                   Source of the CV PDF (HTML) and how to rebuild it
 LICENSE               MIT for the code; personal content, game media and fonts excluded
-css/styles.css        All styles, in eight commented sections
+css/styles.css        All styles, in seven commented sections
 js/                   Scripts, organised as model / view / controller
   models/             Ragdoll physics and state, media helpers (no DOM)
   views/              Canvas, carousel and popup rendering
@@ -49,7 +49,6 @@ js/                   Scripts, organised as model / view / controller
 images/               Media shown in the Work carousels (WebP, MP4)
 fonts/                Self-hosted web fonts and their licences (SIL OFL)
 icons/                Favicon (SVG) and PNG icons
-recommendations/      Recommendation letters (PDF) linked from the page
 docs/                 Project documentation
 ```
 
@@ -75,5 +74,5 @@ to run before publishing.
 ## License
 
 The site's code (HTML, CSS and JavaScript) is released under the [MIT License](LICENSE).
-The CV, recommendation letters, icons and game media are not covered by it; see
+The CV, icons, fonts and game media are not covered by it; see
 [LICENSE](LICENSE) for details.

@@ -34,7 +34,7 @@ split, and what every module does.
 | Path | Role |
 |---|---|
 | `index.html` | The whole page: markup and content, with no inline scripts or styles. |
-| `css/styles.css` | All styles, in eight commented sections. |
+| `css/styles.css` | All styles, in seven commented sections. |
 | `js/models/ragdoll.js` | Ragdoll physics and state machine. No DOM access. |
 | `js/models/media.js` | Media helpers (`CV.Media`) and the `CV.Gallery` list. No DOM access. |
 | `js/views/ragdollView.js` | Draws the ragdoll on its canvas; pointer coordinates. |
@@ -47,7 +47,6 @@ split, and what every module does.
 | `images/` | Carousel media (WebP images, H.264 MP4 videos). |
 | `fonts/` | Self-hosted web fonts (Bricolage Grotesque, Literata) and their licences. |
 | `icons/` | Favicon (SVG), 32px PNG fallback and 180px Apple touch icon. |
-| `recommendations/` | Recommendation letters (PDF), linked from the page. |
 | `CV_AlvaroCabrero.pdf` | One-page CV, linked from the top bar and the contact block. |
 | `cv/` | Source of the CV PDF (`cv.html`), its fonts (Open Sans) and how to rebuild it. |
 | `CNAME` | Custom domain for GitHub Pages (`alvaro.cabrero.me`). |
@@ -281,7 +280,7 @@ can be embedded) and on `a.steam` (using `data-steam` and `data-title`).
 
 - Type is fluid: `clamp(min, vw, max)` sizes follow the viewport.
 - The hero title and section titles are additionally capped by the available
-  width, so the widest words ("ANIMATION" plus the pill, "RECOMMENDATIONS")
+  width, so the widest words ("ANIMATION" plus the pill, "EDUCATION")
   fit screens down to about 220px wide (checked with the web fonts loaded).
 - One breakpoint, **820px**: below it, rows and Skills/Education stack into
   one column, the top bar keeps only the name and Contact, and carousels use a
