@@ -10,6 +10,10 @@ depend on Google Fonts and its extra connections.
 
 | `bodoni-moda-latin.woff2` | [Bodoni Moda](https://github.com/indestructible-type/Bodoni) (variable, weights 400–700; only the logo lockup in the top bar uses 400) | [SIL OFL 1.1](OFL-BodoniModa.txt) |
 
+The "AC" in `icons/favicon.svg` uses glyph outlines from
+[Parisienne](https://fonts.google.com/specimen/Parisienne) (SIL OFL 1.1) converted
+to an SVG path; no Parisienne font file is shipped.
+
 The files are Google Fonts' own Latin and Latin Extended subsets, downloaded
 from fonts.gstatic.com. They are declared with `@font-face` at the top of
 `css/styles.css`, where `unicode-range` makes the browser fetch a subset only
