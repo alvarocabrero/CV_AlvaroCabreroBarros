@@ -205,6 +205,7 @@ fits on phones. Keep at least one link without it.
 ## Icons
 
 - `icons/favicon.svg`: the tab icon, an "AC" monogram in Bodoni-style letters (ink colour, red crossbar on the A) on a light rounded square. The monogram is not shown on the page itself.
+- `images/og.png`: the 1200×630 preview image shown when the site is shared (LinkedIn, Slack, etc.), referenced by the `og:image` tags in `index.html`. After changing it, ask LinkedIn's Post Inspector to re-scrape the URL, as platforms cache previews.
 - The name in the top bar is set in Bodoni Moda, uppercase with wide tracking (`.top .brand` in `css/styles.css`).
 - `icons/icon-32.png`: PNG fallback for browsers without SVG favicons.
 - `icons/icon-180.png`: Apple touch icon (home screen on iOS).

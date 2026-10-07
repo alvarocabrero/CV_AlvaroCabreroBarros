@@ -44,7 +44,7 @@ split, and what every module does.
 | `js/controllers/carouselController.js` | Carousel navigation, autoplay and video playback. |
 | `js/controllers/dialogController.js` | Opens the popup from links and carousels. |
 | `js/main.js` | Entry point: creates and connects everything. |
-| `images/` | Carousel media (WebP images, H.264 MP4 videos). |
+| `images/` | Carousel media (WebP images, H.264 MP4 videos) and `og.png`, the 1200×630 link-preview image. |
 | `fonts/` | Self-hosted web fonts (Bricolage Grotesque, Literata, Bodoni Moda) and their licences. |
 | `icons/` | Favicon (SVG), 32px PNG fallback and 180px Apple touch icon. |
 | `CV_AlvaroCabrero.pdf` | One-page CV, linked from the top bar and the contact block. |
