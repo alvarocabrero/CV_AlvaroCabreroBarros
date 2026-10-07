@@ -45,7 +45,7 @@ split, and what every module does.
 | `js/controllers/dialogController.js` | Opens the popup from links and carousels. |
 | `js/main.js` | Entry point: creates and connects everything. |
 | `images/` | Carousel media (WebP images, H.264 MP4 videos). |
-| `fonts/` | Self-hosted web fonts (Bricolage Grotesque, Literata) and their licences. |
+| `fonts/` | Self-hosted web fonts (Bricolage Grotesque, Literata, Bodoni Moda) and their licences. |
 | `icons/` | Favicon (SVG), 32px PNG fallback and 180px Apple touch icon. |
 | `CV_AlvaroCabrero.pdf` | One-page CV, linked from the top bar and the contact block. |
 | `cv/` | Source of the CV PDF (`cv.html`), its fonts (Open Sans) and how to rebuild it. |

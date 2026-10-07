@@ -204,7 +204,8 @@ fits on phones. Keep at least one link without it.
 
 ## Icons
 
-- `icons/favicon.svg`: the tab icon, a white stick figure on the accent grey.
+- `icons/favicon.svg`: the tab icon, an "AC" monogram in Bodoni-style letters (ink colour, red crossbar on the A) on a light rounded square. The monogram is not shown on the page itself.
+- The name in the top bar is set in Bodoni Moda, uppercase with wide tracking (`.top .brand` in `css/styles.css`).
 - `icons/icon-32.png`: PNG fallback for browsers without SVG favicons.
 - `icons/icon-180.png`: Apple touch icon (home screen on iOS).
 

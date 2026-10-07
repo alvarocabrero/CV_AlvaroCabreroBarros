@@ -1,9 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#6b6863"/>
-  <g stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round" fill="none">
-    <path d="M32 22v19"/>
-    <path d="M23 35l9-9 9-4 3-9"/>
-    <path d="M25 55l7-14 7 14"/>
-  </g>
-  <circle cx="30" cy="14" r="6.2" fill="#fff"/>
+  <rect width="64" height="64" rx="12" fill="#e9e8e6"/>
+  <svg x="7" y="15" width="50" height="35.7" viewBox="-2 -4 112 80">
+    <defs>
+      <clipPath id="c"><rect x="60" y="-5" width="46" height="82"/></clipPath>
+    </defs>
+    <g fill="#1c1c1c">
+      <polygon points="28.4,0 31.4,0 9.9,70 8,70"/>
+      <polygon points="29,0 32.6,0 55.6,70 47.6,70"/>
+      <rect x="14" y="48.9" width="31" height="2" fill="#d7261e"/>
+      <rect x="1" y="69" width="17" height="1.6"/>
+      <rect x="41" y="69" width="21" height="1.6"/>
+      <g clip-path="url(#c)">
+        <path fill-rule="evenodd" d="M92 -1a26 36 0 1 0 0 72a26 36 0 1 0 0-72zM94 1.6a20 33.4 0 1 1 0 66.8a20 33.4 0 1 1 0-66.8z"/>
+      </g>
+      <rect x="104.5" y="4" width="1.6" height="14"/>
+    </g>
+  </svg>
 </svg>
